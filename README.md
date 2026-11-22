@@ -2,34 +2,31 @@
 
 **Live site → [ashutoshkumar2312004.github.io/My-Portfolio](https://ashutoshkumar2312004.github.io/My-Portfolio/)**
 
-A short, reel-style portfolio that tells one story: **from Business Analyst to Business Development**. Scroll it like a film.
+A cinematic, scroll-driven walk through one career: from Business Analyst to Business Development. Scroll it like a film.
 
-## What's inside
+## The walk
 
-- **Portrait intro:** a photoreal face turn, scrubbed frame by frame as you scroll.
-- **3D career journey:** a Three.js path with bloom lighting that moves through each chapter of the career.
-- **The proof:** a laptop that opens into a live dashboard of real results (meetings, outreach, timeline).
-- **Experience, projects and education:** tabbed and compact, written for recruiters.
-- **Let's talk:** a rotary phone in smoke, with a contact form that opens your email app.
-- **Light and dark themes:** switch with the top-right button and watch the theme spread across the page.
+1. **College:** B.E. Electronics & Communication, PERI Institute of Technology, Chennai (2021–2025).
+2. **Courses:** five courses, from code to circuits to the full web stack.
+3. **Internship:** Web Development Intern, MX Omega Technologies (Jul–Sep 2024).
+4. **Full-time:** Business Analyst, Shreyas Tech Solutions, B2B travel SaaS (Jul 2025–Jun 2026).
+5. **FarmwiseAI:** Business Development, Geospatial AI & AgriTech (from Sep 2026); Business Development Executive from 4 Dec 2026.
+6. **Contact:** email, LinkedIn and résumé.
 
-## Built with
+Two looks: **Crimson & Gold** and **Emerald Fog**. The toggle relights the same moment of the walk.
 
-HTML · CSS · vanilla JavaScript · Three.js (r128) with UnrealBloom · Canvas 2D · View Transitions API · scroll-scrubbed WebP sequences.
-Designed and built with AI-assisted tooling, and deployed to **GitHub Pages** through GitHub Actions on every push to `main`.
+## How it's built
 
-## Structure
+- One continuous walk of 1,124 frames at 24 fps, stored as JPEG sprite sheets (`frames/c` and `frames/e`, 6 frames per sheet).
+- Plain HTML, CSS and JavaScript in a single `index.html`, with no framework and no build step.
+- Sheets are decoded around the current moment with `createImageBitmap`, drawn on a canvas, and blended between neighbouring frames so motion stays smooth at any refresh rate.
+- A gliding wheel scroll, chapter navigation, and a frame-matched relight between the two looks.
+- Deployed to GitHub Pages by GitHub Actions on every push to `main`.
 
-```
-index.html     page structure and content
-styles.css     design system, light and dark themes
-main.js        loader, navigation, tabs, carousel, reveal effects
-scene.js       Three.js career journey
-portrait.js    intro face sequence
-scenes.js      laptop dashboard, phone sequence, contact form, theme switch
-assets/        images and frame sequences (face, laptop, phone)
-```
+The scenes are AI-generated (the page says so in its corner); the words and the facts are mine.
+
+The previous version of this portfolio is kept on the [`old-portfolio`](https://github.com/AshutoshKumar2312004/My-Portfolio/tree/old-portfolio) branch.
 
 ## Contact
 
-[ashutoshkumar04022004.ak@gmail.com](mailto:ashutoshkumar04022004.ak@gmail.com) · [LinkedIn](https://www.linkedin.com/in/ashutosh-kumar-053428307/) · [GitHub](https://github.com/AshutoshKumar2312004)
+ashutoshkumar04022004.ak@gmail.com · [LinkedIn](https://www.linkedin.com/in/ashutosh-kumar-053428307/) · [GitHub](https://github.com/AshutoshKumar2312004)

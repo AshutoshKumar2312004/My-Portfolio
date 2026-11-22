@@ -3,557 +3,639 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-family='Arial' font-weight='800' font-size='26' fill='%23fff'%3EAK%3C/text%3E%3Ccircle cx='50' cy='44' r='4' fill='%233b82f6'/%3E%3C/svg%3E">
 <title>Ashutosh Kumar</title>
-<script>try { if (localStorage.getItem('ak-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}</script>
-<meta name="description" content="Ashutosh Kumar: from Business Analyst to Business Development. One year in B2B SaaS at Shreyas Tech Solutions, now Business Development Intern at FarmwiseAI. B.E. ECE, PERI Institute of Technology. Chennai, India.">
-<meta property="og:title" content="Ashutosh Kumar | From BA to BD">
-<meta property="og:description" content="Business Analyst turned Business Developer. I understand the product, the process and the client, and turn that into growth.">
-<meta property="og:image" content="assets/og-banner.webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="styles.css">
+<meta name="description" content="Ashutosh Kumar: Business Analyst turned Business Developer. Business Development Executive at FarmwiseAI from 4 Dec 2026.">
+<meta name="theme-color" content="#0B0A0C">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D9A84E; --gold-hi: #F3D58F; --deep: #9E1B22; --glow: rgba(217,168,78,.45);
+    --text: #FBF4E8; --sub: rgba(251,244,232,.96); --glass: rgba(18,10,10,.6); --glass-2: rgba(14,8,8,.74); --line: rgba(243,213,143,.42);
+    --bg: #0B0A0C; --bar: max(56px, 7vh); color-scheme: dark;
+    --sl: env(safe-area-inset-left, 0px); --sr: env(safe-area-inset-right, 0px);
+  }
+  :root.emerald { --gold: #3FCB86; --gold-hi: #A6F5C8; --deep: #0E3B27; --glow: rgba(63,203,134,.45);
+    --text: #EFFFF5; --sub: rgba(239,255,245,.96); --glass: rgba(4,16,11,.62); --glass-2: rgba(3,12,8,.76); --line: rgba(166,245,200,.38); }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.5 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .skip { position: fixed; left: 12px; top: -60px; z-index: 50; padding: 8px 14px; border-radius: 999px; background: var(--gold); color: #120b05; text-decoration: none; font-weight: 600; }
+  .skip:focus { top: 12px; }
 
+  /* the stage: two canvases, the second one is the other colour, revealed by the toggle sweep */
+  .stage { position: fixed; inset: 0; overflow: hidden; background: #000; }
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #cb { clip-path: inset(0 100% 0 0); }
+  .edge { position: absolute; top: 0; bottom: 0; width: 2px; left: 0; opacity: 0; z-index: 3; pointer-events: none;
+    background: linear-gradient(180deg, transparent, var(--gold-hi), transparent); box-shadow: 0 0 26px 7px var(--glow); }
+  .vig { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: radial-gradient(70% 62% at 0% 100%, rgba(0,0,0,.66), transparent 72%),
+                radial-gradient(125% 95% at 50% 45%, transparent 60%, rgba(0,0,0,.4)),
+                linear-gradient(90deg, rgba(0,0,0,.5), transparent 42%); }
+  .bars::before, .bars::after { content: ""; position: absolute; left: 0; right: 0; height: var(--bar); background: #000; z-index: 4; pointer-events: none; }
+  .bars::before { top: 0; } .bars::after { bottom: 0; }
+
+  /* top pill */
+  .pill-top { position: fixed; z-index: 20; top: calc(var(--bar) * .5); left: 50%; transform: translate(-50%, -50%);
+    display: flex; align-items: center; gap: 4px; padding: 5px 5px 5px 8px; border-radius: 999px; background: var(--glass);
+    border: 1px solid var(--line); backdrop-filter: blur(16px) saturate(1.2); -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    transition: background .9s, border-color .9s; white-space: nowrap; }
+  .mono { position: relative; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; text-decoration: none;
+    font: 600 12px/1 Cinzel, serif; letter-spacing: .06em; color: #120b05; background: linear-gradient(160deg, var(--gold-hi), var(--gold)); box-shadow: 0 0 14px var(--glow); }
+  .mono:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 3px; }
+  .pill-top nav { display: flex; }
+  .pill-top nav a { position: relative; padding: 9px 13px; border-radius: 999px; text-decoration: none; font: 600 11px/1 Cinzel, serif; letter-spacing: .2em; color: var(--gold-hi); }
+  .pill-top nav a:hover { background: rgba(255,255,255,.08); }
+  .pill-top nav a:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 1px; background: rgba(255,255,255,.1); }
+  .toggle { position: relative; width: 136px; border: 0; cursor: pointer; margin-left: 4px; padding: 9px 0; border-radius: 999px; font: 600 12px/1 Inter, sans-serif; letter-spacing: .03em; text-align: center;
+    color: #120b05; background: linear-gradient(180deg, var(--gold-hi), var(--gold)); box-shadow: 0 0 18px var(--glow); transition: background .9s, box-shadow .9s, opacity .3s; }
+  .toggle:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 3px; }
+  .toggle.wait { animation: pulse 1s ease-in-out infinite; cursor: progress; }
+  @keyframes pulse { 50% { opacity: .6; } }
+
+  /* left pill: one dot per chapter */
+  .pill-side { position: fixed; z-index: 20; left: calc(max(14px, 1.6vw) + var(--sl)); top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 18px 10px; border-radius: 999px;
+    background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: background .9s, border-color .9s; }
+  .pill-side .rail { position: absolute; left: 50%; top: 22px; bottom: 22px; width: 1px; background: var(--line); transform: translateX(-50%); }
+  .pill-side .rail i { position: absolute; left: 0; top: 0; width: 1px; height: 0; background: var(--gold-hi); box-shadow: 0 0 8px var(--glow); }
+  .dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--gold-hi); background: #0b0a0c; cursor: pointer; padding: 0; transition: transform .3s, background .3s, box-shadow .3s; }
+  .dot::after { content: ""; position: absolute; left: 50%; top: 50%; width: 34px; height: 30px; transform: translate(-50%, -50%); }
+  .dot.on { background: var(--gold-hi); box-shadow: 0 0 12px var(--glow); transform: scale(1.2); }
+  .dot:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 3px; }
+  .dot span { position: absolute; left: 26px; top: 50%; transform: translateY(-50%); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .25s;
+    padding: 6px 10px; border-radius: 999px; background: var(--glass-2); border: 1px solid var(--line);
+    font: 600 10px/1 Cinzel, serif; letter-spacing: .22em; color: var(--gold-hi); }
+  /* the active dot is scaled 1.2x: counter-scale its label so every label stays the same size */
+  .dot.on span { left: 22.67px; transform: translateY(-50%) scale(.8333); transform-origin: 0 50%; }
+  .dot:focus-visible span { opacity: 1; }
+  @media (hover: hover) { .dot:hover span { opacity: 1; } }
+
+  /* chapter copy, set into the scene */
+  .copy { position: fixed; z-index: 10; left: calc(max(14px, 1.6vw) + 64px + var(--sl)); bottom: calc(var(--bar) + 7vh); width: min(560px, 40vw); pointer-events: none; }
+  /* padding gives the glow and the dark plate room inside the mask; the negative offsets keep the text where it was */
+  .ch { position: absolute; left: -28px; bottom: -28px; width: calc(100% + 56px); padding: 28px; visibility: hidden; isolation: isolate;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--r, 0) * 140% - 40%), transparent calc(var(--r, 0) * 140%));
+    mask-image: linear-gradient(90deg, #000 calc(var(--r, 0) * 140% - 40%), transparent calc(var(--r, 0) * 140%));
+    transform: translateY(calc((1 - var(--r, 0)) * 16px)); }
+  /* a soft dark plate behind each chapter, so the words read on bright floors and fog */
+  .ch::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(0,0,0,.6), rgba(0,0,0,.38) 55%, rgba(0,0,0,0)); }
+  .eyebrow { display: flex; align-items: center; gap: 14px; margin: 0 0 14px; font: 600 11.5px/1 Cinzel, serif; letter-spacing: .3em; color: var(--gold-hi); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 14px var(--glow); white-space: nowrap; }
+  .eyebrow::before { content: ""; flex: none; width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-hi)); box-shadow: 0 0 8px var(--glow); }
+  .ch h1, .ch h2 { margin: 0; font: 600 clamp(32px, 4.2vw, 66px)/1.02 'Cormorant Garamond', Georgia, serif; letter-spacing: .004em; text-wrap: balance;
+    color: var(--text); text-shadow: 0 1px 2px rgba(0,0,0,.6), 0 3px 26px rgba(0,0,0,.78), 0 0 22px var(--glow); }
+  .ch h2.long { font-size: clamp(30px, 3.5vw, 54px); }
+  .ch em { font-style: italic; }
+  .ch p.sub { margin: 16px 0 0; max-width: 46ch; font: 500 16px/1.5 Inter, sans-serif; color: var(--sub); text-wrap: pretty; text-shadow: 0 1px 2px rgba(0,0,0,.95), 0 2px 14px rgba(0,0,0,.9); }
+  .stats { display: flex; gap: 26px; margin-top: 18px; }
+  .stats div { display: flex; flex-direction: column; }
+  .stats b { font: 600 clamp(26px, 2.6vw, 40px)/1 'Cormorant Garamond', serif; font-variant-numeric: lining-nums tabular-nums; color: var(--gold-hi); text-shadow: 0 1px 3px rgba(0,0,0,.85), 0 0 16px var(--glow); }
+  .stats span { margin-top: 6px; font: 600 10px/1.3 Cinzel, serif; letter-spacing: .18em; color: var(--sub); text-shadow: 0 1px 3px rgba(0,0,0,.9); }
+  .stats-note { margin: 10px 0 0; font: 500 11.5px/1.3 Inter, sans-serif; letter-spacing: .04em; color: var(--sub); text-shadow: 0 1px 3px rgba(0,0,0,.9); }
+
+  /* course cards: appear one by one as each alcove lights up */
+  .cards { position: fixed; z-index: 10; right: calc(max(18px, 3vw) + var(--sr)); top: 50%; transform: translateY(-50%); width: min(280px, 24vw); display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+  .card { padding: 13px 16px 12px; border-radius: 14px; background: var(--glass-2); border: 1px solid var(--line); backdrop-filter: blur(14px) saturate(.8); -webkit-backdrop-filter: blur(14px) saturate(.8);
+    opacity: 0; transform: translateX(18px); transition: opacity .6s, transform .6s, background .9s, border-color .9s; }
+  .card.on { opacity: 1; transform: none; }
+  .card small { display: block; font: 600 9.5px/1 Cinzel, serif; letter-spacing: .22em; color: var(--gold-hi); }
+  .card strong { display: block; margin-top: 7px; font: 600 19px/1.15 'Cormorant Garamond', serif; color: var(--text); }
+  .card span { display: block; margin-top: 4px; font-size: 12.5px; color: var(--sub); }
+
+  /* the end card. Desktop: upper left, over the empty hall wall, so it never covers him walking into the arch on the right */
+  @property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+  .contact { position: fixed; z-index: 12; left: calc(max(14px, 1.6vw) + 64px + var(--sl)); top: calc(var(--bar) + 5vh); width: min(430px, 36vw); padding: 26px 26px 24px; border-radius: 24px;
+    background: radial-gradient(120% 80% at 0% 0%, rgba(255,255,255,.07), rgba(255,255,255,0) 55%), var(--glass-2); border: 1px solid var(--line);
+    box-shadow: 0 30px 70px rgba(0,0,0,.5), 0 0 0 1px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.08), 0 0 40px -10px var(--glow);
+    backdrop-filter: blur(22px) saturate(1.15); -webkit-backdrop-filter: blur(22px) saturate(1.15);
+    opacity: 0; visibility: hidden; transform: translateY(18px) scale(.985); transition: opacity .8s, transform .8s, visibility .8s, background .9s, border-color .9s; }
+  .contact.on { opacity: 1; visibility: visible; transform: none; }
+  /* a slow gold light travelling around the edge */
+  .contact::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
+    background: conic-gradient(from var(--ang), transparent 0 62%, var(--gold-hi) 74%, transparent 86% 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+    animation: orbit 7s linear infinite; }
+  @keyframes orbit { to { --ang: 360deg; } }
+  .contact > * { opacity: 0; transform: translateY(8px); transition: opacity .6s, transform .6s; }
+  .contact.on > * { opacity: 1; transform: none; }
+  .contact.on > :nth-child(1) { transition-delay: .12s; } .contact.on > :nth-child(2) { transition-delay: .22s; } .contact.on > :nth-child(3) { transition-delay: .3s; }
+  .contact.on > :nth-child(4) { transition-delay: .38s; } .contact.on > :nth-child(5) { transition-delay: .46s; } .contact.on > :nth-child(6) { transition-delay: .54s; }
+  .ct-top { display: flex; align-items: center; gap: 16px; }
+  .seal { flex: none; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; font: 600 18px/1 Cinzel, serif; letter-spacing: .04em; color: #120b05;
+    background: radial-gradient(circle at 35% 28%, var(--gold-hi), var(--gold) 70%);
+    background: radial-gradient(circle at 35% 28%, var(--gold-hi), var(--gold) 58%, color-mix(in srgb, var(--gold) 55%, #000));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 -2px 6px rgba(0,0,0,.25), 0 0 0 4px rgba(0,0,0,.4), 0 0 0 5px var(--line), 0 0 26px var(--glow); }
+  .ct-eyebrow { margin: 0; font: 600 10px/1.4 Cinzel, serif; letter-spacing: .26em; color: var(--gold-hi); }
+  .contact h3 { margin: 6px 0 0; font: 600 34px/1 'Cormorant Garamond', Georgia, serif; letter-spacing: .01em; color: var(--text); text-shadow: 0 0 18px var(--glow); }
+  .ct-role { margin: 6px 0 0; font-size: 13.5px; color: var(--sub); }
+  .ct-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; padding: 0; list-style: none; }
+  .ct-tags li { padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.04); font: 600 9.5px/1.2 Cinzel, serif; letter-spacing: .14em; color: var(--gold-hi); }
+  .ct-rule { position: relative; height: 1px; margin: 18px 0; background: linear-gradient(90deg, transparent, var(--line) 18%, var(--line) 82%, transparent); }
+  .ct-rule::after { content: ""; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; transform: translate(-50%, -50%) rotate(45deg); background: var(--gold-hi); box-shadow: 0 0 10px var(--glow); }
+  .ct-mail { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; }
+  .ct-mail span { flex: 1; min-width: 0; font: 500 13px/1.3 Inter, sans-serif; color: var(--gold-hi); user-select: all; -webkit-user-select: all; overflow-wrap: break-word; }
+  .copy-btn { flex: none; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--gold-hi); font: 600 11px/1 Inter, sans-serif; letter-spacing: .04em; cursor: pointer; }
+  .copy-btn:hover { background: rgba(255,255,255,.1); }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px; text-decoration: none; font: 600 12.5px/1 Inter, sans-serif; letter-spacing: .02em; border: 1px solid var(--line); color: var(--gold-hi); background: rgba(255,255,255,.04); transition: background .25s, box-shadow .25s, transform .25s; }
+  .btn svg { width: 15px; height: 15px; flex: none; }
+  .btn:hover { background: rgba(255,255,255,.1); transform: translateY(-1px); }
+  .btn.primary { color: #120b05; border-color: transparent; background: linear-gradient(180deg, var(--gold-hi), var(--gold)); box-shadow: 0 0 16px var(--glow); }
+  .btn.primary:hover { box-shadow: 0 0 28px var(--glow); }
+  .btn:focus-visible, .copy-btn:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 3px; }
+
+  /* the hint and the AI note both live inside the black bottom bar, so they always read */
+  .hint { position: fixed; z-index: 21; left: 50%; bottom: calc(var(--bar) * .5); transform: translate(-50%, 50%); display: flex; align-items: center; gap: 10px;
+    font: 600 10px/1 Cinzel, serif; letter-spacing: .4em; color: var(--gold-hi); opacity: .95; transition: opacity .4s; pointer-events: none; }
+  .hint i { position: relative; width: 1px; height: 18px; background: rgba(243,213,143,.25); overflow: hidden; }
+  .hint i::after { content: ""; position: absolute; left: 0; top: -8px; width: 1px; height: 8px; background: var(--gold-hi); animation: drip 1.6s ease-in-out infinite; }
+  @keyframes drip { to { top: 18px; } }
+  .buf { position: fixed; z-index: 21; left: 50%; bottom: calc(var(--bar) * .5); transform: translate(-50%, 50%); font: 600 9.5px/1 Cinzel, serif; letter-spacing: .34em; color: var(--gold-hi); opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .buf.on { opacity: .85; }
+  .ai-note { position: fixed; z-index: 21; right: calc(max(16px, 2.2vw) + var(--sr)); bottom: calc(var(--bar) * .5); transform: translateY(50%); margin: 0;
+    font: 500 10px/12px Inter, system-ui, sans-serif; letter-spacing: .05em; color: rgba(255,255,255,.62); pointer-events: none; }
+  .loader { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; background: #000; transition: opacity .8s; }
+  .loader[hidden] { display: none; }
+  .loader .m { font: 600 15px/1 Cinzel, serif; letter-spacing: .5em; color: #F3D58F; text-align: center; }
+  .loader .m small { display: block; margin-top: 16px; font: 500 10px/1 Inter, sans-serif; letter-spacing: .3em; color: rgba(243,213,143,.7); }
+  .track { position: relative; height: 1100vh; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+  @media (max-width: 760px) {
+    :root { --bar: 56px; }
+    .pill-top { padding: 4px 4px 4px 6px; }
+    .pill-top nav a { padding: 8px 8px; letter-spacing: .12em; font-size: 9.5px; }
+    .pill-top nav a::after, .toggle::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; transform: translateY(-50%); }
+    .mono::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; }
+    .toggle { width: 112px; padding: 8px 0; font-size: 11px; }
+    .pill-side { left: calc(8px + var(--sl)); gap: 14px; padding: 14px 7px; }
+    .dot { width: 11px; height: 11px; } .dot::after { width: 36px; height: 30px; }
+    .dot span { display: none; }
+    .copy { left: calc(46px + var(--sl)); right: 14px; width: auto; bottom: calc(var(--bar) + 3vh); }
+    .eyebrow { font-size: 10px; letter-spacing: .2em; gap: 10px; } .eyebrow::before { width: 26px; }
+    .ch p.sub { font-size: 14.5px; }
+    .vig { background: radial-gradient(120% 90% at 50% 38%, transparent 45%, rgba(0,0,0,.55)), linear-gradient(0deg, rgba(0,0,0,.78), transparent 55%); }
+    /* phones: one card slot above his head, each course cross-fades into the next */
+    .cards { display: grid; top: calc(var(--bar) + 16px); right: 12px; left: calc(46px + var(--sl)); width: auto; transform: none; }
+    .card { grid-area: 1 / 1; padding: 9px 12px; } .card strong { font-size: 16px; margin-top: 5px; } .card span { font-size: 11.5px; }
+    .card.on:not(.latest) { opacity: 0; transform: translateY(-6px); }
+    .contact { left: calc(46px + var(--sl)); right: 12px; width: auto; top: auto; bottom: calc(var(--bar) + 2.5vh); padding: 18px 16px 16px; }
+    .seal { width: 48px; height: 48px; font-size: 15px; }
+    .contact h3 { font-size: 27px; }
+    .ct-tags { margin-top: 12px; } .ct-rule { margin: 14px 0; } .ct-mail { margin-bottom: 12px; }
+    .btns { gap: 6px; } .btn { padding: 0 12px; } .btn svg { display: none; }
+    /* on phones the contact card takes the place of the closing headline */
+    body.at-end .ch:last-child { opacity: 0; }
+    .stats { gap: 16px; }
+    .hint { left: calc(16px + var(--sl)); transform: translateY(50%); }
+    .buf { left: calc(16px + var(--sl)); transform: translateY(50%); }
+  }
+  /* short or narrow desktop windows: a more compact card that still fits between the bars */
+  @media (min-width: 761px) and (max-width: 1100px), (min-width: 761px) and (max-height: 640px) {
+    .contact { width: min(380px, 44vw); padding: 18px 20px 18px; top: calc(var(--bar) + 2.5vh); }
+    .seal { width: 46px; height: 46px; font-size: 14px; }
+    .ct-eyebrow { font-size: 9px; letter-spacing: .2em; }
+    .contact h3 { font-size: 26px; }
+    .ct-role { font-size: 12.5px; }
+    .ct-tags { margin-top: 10px; } .ct-tags li { font-size: 8.5px; padding: 4px 8px; }
+    .ct-rule { margin: 12px 0; }
+    .ct-mail { margin-bottom: 12px; } .ct-mail span { font-size: 12px; }
+    .btn { min-height: 34px; padding: 0 12px; font-size: 12px; } .btn svg { width: 13px; height: 13px; }
+  }
+  /* short desktop windows can't fit five stacked cards: one slot, each course cross-fades into the next */
+  @media (min-width: 761px) and (max-height: 640px) {
+    .cards { display: grid; top: calc(var(--bar) + 3vh); transform: none; }
+    .card { grid-area: 1 / 1; }
+    .card.on:not(.latest) { opacity: 0; transform: translateY(-6px); }
+  }
+  /* landscape phones and very short windows: compact copy; the card takes the closing headline's place */
+  @media (min-width: 761px) and (max-height: 480px) {
+    body.at-end .ch:last-child { opacity: 0; }
+    .copy { bottom: calc(var(--bar) + 12px); }
+    .ch h1, .ch h2 { font-size: 30px; } .ch h2.long { font-size: 28px; }
+    .ch p.sub { margin-top: 10px; font-size: 13.5px; }
+    .stats { margin-top: 10px; } .stats-note { margin-top: 6px; }
+    .ct-tags { display: none; }
+  }
+  .ch:last-child { transition: opacity .5s; }
+  /* 761-820px wide (iPad portrait): the longest eyebrow must fit inside the masked box */
+  @media (min-width: 761px) and (max-width: 820px) { .eyebrow { font-size: 10.5px; letter-spacing: .22em; gap: 10px; } .eyebrow::before { width: 28px; } }
+  @media (max-width: 400px) { .pill-top nav a.opt { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .ch { -webkit-mask-image: none; mask-image: none; transform: none; } .card, .contact, .contact > * { transition: none; } .hint i::after, .toggle.wait, .contact::after { animation: none; } }
+</style>
 </head>
 <body>
-<div class="grain" aria-hidden="true"></div>
+<a class="skip" href="#contact-card" id="skip">Skip to contact</a>
 
-<!-- LOADER -->
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader-name" id="loaderName">ASHUTOSH KUMAR</div>
-  <div class="loader-track"><div class="loader-fill" id="loaderFill"></div></div>
-  <div class="loader-sub"><span>Business Analyst</span><i>→</i><span>Business Development</span></div>
+<div class="stage bars" aria-hidden="true">
+  <canvas id="ca"></canvas>
+  <canvas id="cb"></canvas>
+  <div class="edge" id="edge"></div>
+  <div class="vig"></div>
 </div>
 
-<!-- TOP BAR -->
-<header class="topbar topbar--sys" id="topbar">
-  <a class="brand" href="#top" aria-label="Ashutosh Kumar, back to top">
-    <span class="brand-name">Ashutosh<i>.</i></span>
-    <span class="brand-sub"><b></b>Open to work</span>
-  </a>
-  <nav class="topnav" aria-label="Primary">
-    <a href="#top" class="is-current">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#experience">Experience</a>
-    <a href="#work">Projects</a>
-    <a href="#contact">Contact</a>
+<header class="pill-top">
+  <a class="mono" href="#" data-jump="0" aria-label="Ashutosh Kumar, back to the start">AK</a>
+  <nav aria-label="Primary">
+    <a href="#" data-jump="4.5">About</a>
+    <a href="#" data-jump="8.7" class="opt">Journey</a>
+    <a href="#" data-jump="99">Contact</a>
   </nav>
-  <div class="topbar-actions">
-    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to light mode" title="Switch theme">
-      <svg class="ti-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M5.3 18.7 7 17M17 7l1.7-1.7"/></svg>
-      <svg class="ti-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8Z"/></svg>
-    </button>
-    <a class="btn btn-small btn-hire" href="#call">Hire me</a>
-    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
-      <span class="menu-lines" aria-hidden="true"><i></i><i></i></span>
-    </button>
-  </div>
+  <button class="toggle" id="toggle" type="button" aria-label="Switch to the Emerald Fog look">Emerald Fog</button>
 </header>
 
-<nav class="menu" id="menu" hidden aria-label="Site">
-  <ol class="menu-list">
-    <li><a href="#story"><span>Story</span><em>The 3D journey</em></a></li>
-    <li><a href="#about"><span>About</span><em>Who I am</em></a></li>
-    <li><a href="#services"><span>What I do</span><em>Services</em></a></li>
-    <li><a href="#why"><span>Why hire me</span><em>Five reasons</em></a></li>
-    <li><a href="#journey"><span>Journey</span><em>College to BD</em></a></li>
-    <li><a href="#experience"><span>Experience</span><em>Work &amp; internships</em></a></li>
-    <li><a href="#work"><span>Work</span><em>Things I've built</em></a></li>
-    <li><a href="#education"><span>Education</span><em>PERI · ECE</em></a></li>
-    <li><a href="#contact"><span>Contact</span><em>Let's talk</em></a></li>
-  </ol>
+<nav class="pill-side" aria-label="Chapters">
+  <div class="rail"><i id="rail"></i></div>
+  <button class="dot" type="button" data-jump="8.7" aria-label="College"><span aria-hidden="true">College</span></button>
+  <button class="dot" type="button" data-jump="12.3" aria-label="Courses"><span aria-hidden="true">Courses</span></button>
+  <button class="dot" type="button" data-jump="26.3" aria-label="Internship"><span aria-hidden="true">Internship</span></button>
+  <button class="dot" type="button" data-jump="31.5" aria-label="Full-time"><span aria-hidden="true">Full-time</span></button>
+  <button class="dot" type="button" data-jump="36.8" aria-label="FarmwiseAI"><span aria-hidden="true">FarmwiseAI</span></button>
+  <button class="dot" type="button" data-jump="99" aria-label="Contact"><span aria-hidden="true">Contact</span></button>
 </nav>
 
-<main>
-  <!-- ============ INTRO: pinned 3D portrait (portrait.js). The face turns toward profile as you scroll. ============ -->
-  <section class="intro cine" id="top" data-scene="PortraitScene" aria-label="Introduction">
-    <div class="intro-pin">
-      <div class="intro-glow" aria-hidden="true"></div>
-      <canvas class="intro-canvas" id="portrait" aria-hidden="true"></canvas>
-      <div class="intro-vignette" aria-hidden="true"></div>
+<!-- the full story as plain text for screen readers; the animated copy below is decoration -->
+<article class="sr">
+  <h1>Ashutosh Kumar, Business Analyst and Business Developer, Chennai</h1>
+  <p>Business Development Executive at FarmwiseAI from 4 December 2026.</p>
+  <p>Engineer by degree. Analyst by experience. Business developer by choice.</p>
+  <h2>Chapter I, 2021 to 2025: College</h2><p>B.E. Electronics and Communication, PERI Institute of Technology, Chennai.</p>
+  <h2>Chapter II: Courses</h2><ul><li>Python Core, SoloLearn, November 2022</li><li>Learning Altium, LinkedIn Learning, August 2022</li><li>Soldering for Electronics, LinkedIn Learning, September 2022</li><li>Full Stack Web Development, PrepInsta, October 2024</li><li>Web Technologies, Touchmark Descience, December 2024 to February 2025</li></ul>
+  <h2>Chapter III, July to September 2024: Internship</h2><p>Web Development Intern at MX Omega Technologies. Front-end pages in HTML, CSS, JavaScript and Bootstrap.</p>
+  <h2>Chapter IV, July 2025 to June 2026: Full-time</h2><p>Business Analyst at Shreyas Tech Solutions, B2B travel SaaS. Team Lead recognition in 10 days. Requirements, UAT, go-live and demos, with 2 live high-priority clients in month one.</p>
+  <h2>Chapter V, from September 2026: FarmwiseAI</h2><p>Intern to Business Development Executive in 3 months. Geospatial AI and AgriTech. Building an international pipeline across 7 markets. In the first 8 weeks: 1,346 outreach, 34 meetings, 17 presentations.</p>
+  <h2>Chapter VI: Contact</h2><p>Email ashutoshkumar04022004.ak@gmail.com. The contact links appear at the end of the walk; use the Skip to contact link to go there.</p>
+</article>
 
-      <div class="intro-status" aria-hidden="true">
-        <span>› System online</span>
-        <span>› Loading profile: Business Analyst → Business Development</span>
-        <span>› Status: open to work · Chennai, IN</span>
-      </div>
+<div class="copy" aria-hidden="true">
+  <section class="ch" data-in="0" data-out="3.6"><p class="eyebrow">Ashutosh Kumar · Chennai</p><h1>Business Analyst. <em>Business Developer.</em></h1><p class="sub">Business Development Executive at FarmwiseAI from 4&nbsp;Dec&nbsp;2026.</p></section>
+  <section class="ch" data-in="3.8" data-out="7.6"><p class="eyebrow">About</p><h2 class="long">Engineer by degree. Analyst by experience. <em>Business developer by choice.</em></h2></section>
+  <section class="ch" data-in="8.0" data-out="11.2"><p class="eyebrow">Chapter I · 2021 – 2025</p><h2>Engineered to <em>solve problems.</em></h2><p class="sub">B.E. Electronics &amp; Communication · PERI Institute of Technology, Chennai.</p></section>
+  <section class="ch" data-in="11.6" data-out="25.4"><p class="eyebrow">Chapter II · Courses</p><h2>Never stopped <em>learning.</em></h2><p class="sub">Five courses, from code to circuits to the full web stack.</p></section>
+  <section class="ch" data-in="25.6" data-out="30.6"><p class="eyebrow">Chapter III · Jul – Sep 2024</p><h2>Front-end pages, <em>shipped in sprints.</em></h2><p class="sub">Web Development Intern · MX Omega Technologies. HTML, CSS, JavaScript and Bootstrap.</p></section>
+  <section class="ch" data-in="30.8" data-out="35.8"><p class="eyebrow">Chapter IV · Jul 2025 – Jun 2026</p><h2>Team Lead recognition <em>in 10 days.</em></h2><p class="sub">Business Analyst · Shreyas Tech Solutions, B2B travel SaaS. Requirements, UAT, go-live and demos; 2 live high-priority clients in month one.</p></section>
+  <section class="ch" data-in="36.1" data-out="41.3"><p class="eyebrow">Chapter V · From Sep 2026</p><h2>Intern to Executive <em>in 3 months.</em></h2><p class="sub">FarmwiseAI · Geospatial AI &amp; AgriTech. Building an international pipeline across 7 markets.</p>
+    <div class="stats"><div><b data-count="1346">0</b><span>outreach</span></div><div><b data-count="34">0</b><span>meetings</span></div><div><b data-count="17">0</b><span>presentations</span></div></div><p class="stats-note">In the first 8 weeks</p></section>
+  <section class="ch" data-in="41.6" data-out="999"><p class="eyebrow">Chapter VI · Contact</p><h2>Let’s <em>talk.</em></h2></section>
+</div>
 
-      <div class="ichapter is-active" data-start="0" data-end="0.58">
-        <h1 class="intro-name"><span class="in-1">Ashutosh</span><span class="in-2">Kumar</span></h1>
-        <p class="intro-kicker">Business Analyst <i>→</i> Business Development</p>
-      </div>
-      <div class="ichapter ichapter-2" data-start="0.58" data-end="1.01">
-        <p class="sys-label">Hello, recruiter</p>
-        <p class="intro-line">Business development that <em>knows the product.</em></p>
-        <p class="intro-sub">A year of B2B SaaS demos, requirements and go-lives behind every pitch.</p>
-        <div class="intro-cta">
-          <a class="btn btn-solid" href="#experience">View experience</a>
-          <a class="btn" href="#call">Hire me</a>
-        </div>
-      </div>
+<div class="cards" aria-hidden="true">
+  <div class="card" data-at="14.1"><small>Course</small><strong>Python Core</strong><span>SoloLearn · Nov 2022</span></div>
+  <div class="card" data-at="17.0"><small>Course</small><strong>Learning Altium</strong><span>LinkedIn Learning · Aug 2022</span></div>
+  <div class="card" data-at="19.9"><small>Course</small><strong>Soldering for Electronics</strong><span>LinkedIn Learning · Sep 2022</span></div>
+  <div class="card" data-at="22.8"><small>Course</small><strong>Full Stack Web Development</strong><span>PrepInsta · Oct 2024</span></div>
+  <div class="card" data-at="25.2"><small>Course</small><strong>Web Technologies</strong><span>Touchmark Descience · Dec 2024 – Feb 2025</span></div>
+</div>
 
-      <div class="intro-hud" aria-hidden="true">
-        <span class="intro-hud-k">01 / Portrait</span>
-        <span class="intro-hud-track"><i id="introFill"></i></span>
-        <span class="intro-hud-k">Scroll</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ JOURNEY 3D: pinned WebGL journey (scene.js) ============
-       Stations along a glowing path: Engineer (PCB) → Analyst (pipeline rings) → Developer (globe + growth) → overview.
-       main.js computes progress 0..1 and calls HeroScene.render(progress, timeMs). -->
-  <section class="hero cine" id="story" aria-label="Career story in 3D">
-    <div class="hero-pin">
-      <canvas class="scene" id="scene" aria-hidden="true"></canvas>
-      <div class="scene-fallback" aria-hidden="true"></div>
-      <div class="scene-shade" aria-hidden="true"></div>
-
-      <div class="chapters">
-        <article class="chapter is-active" data-start="0" data-end="0.16" data-stage="Introduction">
-          <p class="eyebrow">The story in 3D <i class="arrow">·</i> 2021 → 2026</p>
-          <h2 class="display"><span class="line">The</span><span class="line">journey<em>.</em></span></h2>
-          <p class="lede">Engineer, then Business Analyst in B2B SaaS, now Business Development at <strong>FarmwiseAI</strong>. Follow the line.</p>
-        </article>
-
-        <article class="chapter" data-start="0.16" data-end="0.37" data-stage="The engineer">
-          <p class="eyebrow"><span class="step">01</span> The engineer · 2021–2025</p>
-          <h2 class="display display-md">Built on <em>engineering.</em></h2>
-          <p class="lede">B.E. in Electronics &amp; Communication Engineering from PERI Institute of Technology, Chennai. I designed PCBs, built an IR security alarm and a water-level indicator, and taught myself web development.</p>
-        </article>
-
-        <article class="chapter" data-start="0.37" data-end="0.59" data-stage="The analyst">
-          <p class="eyebrow"><span class="step">02</span> The analyst · Shreyas Tech Solutions · 2025–26</p>
-          <h2 class="display display-md">Team Lead recognition in <em>10&nbsp;days.</em></h2>
-          <p class="lede">As a Business Analyst in B2B travel SaaS, I ran the full client cycle: demo, requirements, UAT, go-live and support. I handled two live P1 clients in my first month.</p>
-        </article>
-
-        <article class="chapter" data-start="0.59" data-end="0.8" data-stage="The business developer">
-          <p class="eyebrow"><span class="step">03</span> The business developer · FarmwiseAI · 2026–</p>
-          <h2 class="display display-md">Now growing <em>the business.</em></h2>
-          <p class="lede">Since 4 September 2026 I have been building FarmwiseAI's international pipeline: 1,452 organisations researched, 1,346 outreach and 34 client meetings in two months.</p>
-        </article>
-
-        <article class="chapter chapter-stats" data-start="0.8" data-end="1.01" data-stage="In numbers">
-          <p class="statement">Understand first.<br><em>Then deliver.</em></p>
-          <dl class="stats">
-            <div><dt><span data-count="10">10</span><small>days</small></dt><dd>Trainee to Team Lead recognition</dd></div>
-            <div><dt><span data-count="2">2</span></dt><dd>Live P1 clients in my first month</dd></div>
-            <div><dt><span data-count="34">34</span></dt><dd>Client meetings in two months at FarmwiseAI</dd></div>
-            <div><dt>SATTE<small>2026</small></dt><dd>Represented the company in New Delhi</dd></div>
-          </dl>
-        </article>
-      </div>
-
-      <div class="hud" aria-hidden="true">
-        <div class="hud-chapter"><span id="hudIndex">01</span><span class="hud-sep">/</span>05 <span class="hud-name" id="hudName">Introduction</span></div>
-        <div class="hud-track"><div class="hud-fill" id="hudFill"></div><i style="left:16%"></i><i style="left:37%"></i><i style="left:59%"></i><i style="left:80%"></i></div>
-        <div class="hud-year">Year <span id="hudYear">2021</span></div>
-      </div>
-
-      <a class="scroll-cue" href="#glance" id="scrollCue">Scroll</a>
-    </div>
-  </section>
-
-  <!-- ============ MARQUEE ============ -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Business Analysis</span><i>✦</i><span>Business Development</span><i>✦</i><span>Pre-Sales</span><i>✦</i><span>B2B SaaS</span><i>✦</i><span>Client Success</span><i>✦</i><span>Geospatial AI</span><i>✦</i>
-      <span>Business Analysis</span><i>✦</i><span>Business Development</span><i>✦</i><span>Pre-Sales</span><i>✦</i><span>B2B SaaS</span><i>✦</i><span>Client Success</span><i>✦</i><span>Geospatial AI</span><i>✦</i>
-    </div>
+<section class="contact" id="contact-card" aria-labelledby="ct-name" tabindex="-1">
+  <div class="ct-top">
+    <div class="seal" aria-hidden="true">AK</div>
+    <div><p class="ct-eyebrow">Let’s build what’s next</p><h3 id="ct-name">Ashutosh Kumar</h3><p class="ct-role">Business Development · FarmwiseAI · Chennai</p></div>
   </div>
+  <ul class="ct-tags" aria-label="Open to"><li>Business Development</li><li>Business Analysis</li><li>Pre-Sales</li></ul>
+  <div class="ct-rule" aria-hidden="true"></div>
+  <div class="ct-mail"><span id="mail">ashutoshkumar04022004.ak@<wbr>gmail.com</span><button class="copy-btn" id="copy" type="button">Copy</button></div>
+  <div class="btns">
+    <a class="btn primary" href="mailto:ashutoshkumar04022004.ak@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email me</a>
+    <a class="btn" href="https://www.linkedin.com/in/ashutosh-kumar-053428307/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>LinkedIn</a>
+    <a class="btn" href="Ashutosh_Kumar_Resume.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Résumé</a>
+  </div>
+</section>
 
-  <!-- ============ AT A GLANCE ============ -->
-  <section class="glance wrap" id="glance" aria-label="At a glance">
-    <dl class="glance-grid">
-      <div><dt>Now</dt><dd>Business Development Intern, FarmwiseAI · international pipeline</dd></div>
-      <div><dt>Before</dt><dd>Business Analyst, Pre-Sales &amp; BD · Shreyas Tech Solutions · 1 year</dd></div>
-      <div><dt>Education</dt><dd>B.E. ECE · PERI Institute of Technology · Anna University</dd></div>
-      <div><dt>Based in</dt><dd>Chennai, India · English, Hindi, Tamil</dd></div>
-    </dl>
-  </section>
+<div class="hint" id="hint" aria-hidden="true">SCROLL <i></i></div>
+<div class="buf" id="buf" aria-hidden="true">LOADING</div>
+<p class="ai-note">AI-generated website by Ashutosh Kumar</p>
+<div class="loader" id="loader" role="status"><div class="m">A K<small id="pct">LOADING · 0%</small></div></div>
+<div class="track" id="track"></div>
 
-  <!-- ============ ABOUT ============ -->
-  <section class="about about--reel wrap section" id="about">
-    <div class="about-photo reveal">
-      <figure class="tilt" data-tilt>
-        <img src="assets/portrait-bw.webp" width="1000" height="1000" alt="Black and white portrait of Ashutosh Kumar" loading="lazy" decoding="async">
-        <span class="tilt-glare" aria-hidden="true"></span>
-      </figure>
-      <p class="photo-caption">Chennai · 2026</p>
-    </div>
-    <div class="about-copy reveal">
-      <p class="eyebrow">About me</p>
-      <h2 class="h2" data-echo="About">About <em>me.</em></h2>
-      <p class="about-lead">Engineer by degree, analyst by experience, business developer by choice.</p>
-      <p>I'm an ECE engineer who moved into business. At Shreyas Tech Solutions (TeSePr), a B2B travel-tech SaaS company, I took clients from first demo through requirements, UAT and go-live. I earned Team Lead recognition within 10 days and handled two live P1 clients in my first month.</p>
-      <p>Since September 2026 I have been building FarmwiseAI's international pipeline for geospatial and agritech solutions across seven markets: 1,346 outreach, 938 follow-ups and 34 client meetings in my first two months. I work after hours, weekends and holidays when a deal needs it, and I work in English, Hindi and Tamil.</p>
-      <div class="about-cards">
-        <div class="acard"><span class="acard-k">Experience</span><b>1 yr SaaS + BD</b><p>Business Analyst at Shreyas Tech Solutions, now BD Intern at FarmwiseAI, plus a 2024 web development internship.</p></div>
-        <div class="acard"><span class="acard-k">Education</span><b>B.E. ECE · 7.53</b><p>PERI Institute of Technology, Chennai. Anna University, 2021 – 2025.</p></div>
-        <div class="acard"><span class="acard-k">Projects</span><b>3 web · 2 hardware</b><p>Portfolio, storefront and game on GitHub, plus two college PCB builds.</p></div>
-      </div>
-    </div>
-  </section>
+<script>
+(function () {
+  'use strict';
+  // ---- the walk: 1124 frames at 24 fps, stored as JPEG sprite sheets of 6 frames (2 x 3 grid of 1280x720) ----
+  var FPS = 24, N = 1124, PER = 6, COLS = 2, FW = 1280, FH = 720, NS = Math.ceil(N / PER), T = N / FPS, HOLD = 0.06;
+  var DIRS = { crimson: 'frames/c/', emerald: 'frames/e/' };
+  var small = matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var KEEP = small ? 4 : 7, MAXF = small ? 3 : 5, MAXD = small ? 2 : 3;
 
-  <!-- ============ WHAT I DO (services) ============ -->
-  <section class="services wrap section" id="services">
-    <header class="section-head reveal">
-      <p class="eyebrow">What I do</p>
-      <h2 class="h2" data-echo="Services">How I add value <em>to your team.</em></h2>
-    </header>
-    <div class="svc-layout">
-      <div class="svc-grid" id="svcGrid">
-        <article class="svc reveal">
-          <span class="svc-icon svc-icon-ba" aria-hidden="true"></span>
-          <h3>Business Analysis</h3>
-          <p>Gather requirements, write BRDs, coordinate UAT and align Dev, QA and Product so the build matches what the client asked for.</p>
-          <a class="svc-link" href="#experience">View details <i>→</i></a>
-        </article>
-        <article class="svc reveal">
-          <span class="svc-icon svc-icon-demo" aria-hidden="true"></span>
-          <h3>Pre-Sales &amp; Demos</h3>
-          <p>Demo B2B SaaS products, prepare commercial documents and guide clients to signing, knowing how the product behaves after the sale.</p>
-          <a class="svc-link" href="#experience">View details <i>→</i></a>
-        </article>
-        <article class="svc reveal">
-          <span class="svc-icon svc-icon-bd" aria-hidden="true"></span>
-          <h3>Business Development</h3>
-          <p>Research organisations, reach decision makers on LinkedIn and e-mail, follow up and run meetings. 1,346 outreach and 34 meetings in two months.</p>
-          <a class="svc-link" href="#why">View details <i>→</i></a>
-        </article>
-        <article class="svc reveal">
-          <span class="svc-icon svc-icon-cs" aria-hidden="true"></span>
-          <h3>Client Success &amp; Delivery</h3>
-          <p>Take clients through implementation, deployment and go-live, then keep accounts healthy with health checks and escalation cover.</p>
-          <a class="svc-link" href="#experience">View details <i>→</i></a>
-        </article>
-      </div>
+  var A = document.getElementById('ca'), B = document.getElementById('cb'), ca = A.getContext('2d', { alpha: false }), cb = B.getContext('2d', { alpha: false });
+  var track = document.getElementById('track'), loader = document.getElementById('loader'), pct = document.getElementById('pct'), hint = document.getElementById('hint'), buf = document.getElementById('buf');
+  var chs = [].slice.call(document.querySelectorAll('.ch')), cards = [].slice.call(document.querySelectorAll('.card')), dots = [].slice.call(document.querySelectorAll('.dot'));
+  var contact = document.getElementById('contact-card'), rail = document.getElementById('rail'), btn = document.getElementById('toggle'), edge = document.getElementById('edge'), root = document.documentElement;
+  var counters = [].slice.call(document.querySelectorAll('[data-count]')), counted = false;
 
-      <aside class="svc-side reveal" aria-label="Where I applied it">
-        <div class="side-tabs" role="tablist" aria-label="Companies">
-          <button class="side-tab" role="tab" aria-selected="true" data-side="0" type="button">Shreyas Tech</button>
-          <button class="side-tab" role="tab" aria-selected="false" data-side="1" type="button" tabindex="-1">FarmwiseAI</button>
-          <button class="side-tab" role="tab" aria-selected="false" data-side="2" type="button" tabindex="-1">MX Omega</button>
-        </div>
-        <div class="side-panel" data-panel="0">
-          <p>One year as a <b>Business Analyst</b> at <b>Shreyas Tech Solutions</b>, a B2B travel-tech SaaS company: Team Lead recognition in 10 days, two live P1 clients in month one, and SATTE 2026 in New Delhi.</p>
-          <div class="side-media side-media-sts" aria-hidden="true"><span>Lead → Demo → UAT → Go-live</span></div>
-        </div>
-        <div class="side-panel" data-panel="1" hidden>
-          <p>Since September 2026, building <b>FarmwiseAI's international pipeline</b> across the Middle East, Africa, the US, Australia, Latin America, APAC and Turkey: <b>1,452</b> organisations researched and <b>34</b> client meetings in two months.</p>
-          <div class="side-media side-media-fw" aria-hidden="true"><span>Geospatial AI · Chennai</span></div>
-        </div>
-        <div class="side-panel" data-panel="2" hidden>
-          <p>A three-month <b>web development internship</b> at <b>MX Omega Technologies</b> in 2024: front-end pages with HTML, CSS, JavaScript, React and Bootstrap in Agile sprints.</p>
-          <div class="side-media side-media-mx" aria-hidden="true"><span>HTML · CSS · JS · React</span></div>
-        </div>
-        <a class="btn btn-block" href="#experience">View full experience</a>
-      </aside>
-    </div>
-  </section>
+  function Look() { this.blob = new Array(NS); this.state = new Uint8Array(NS); this.tries = new Uint8Array(NS); this.bmp = new Array(NS); this.dec = new Uint8Array(NS); this.used = new Float64Array(NS); }
+  // state: 0 not fetched, 1 fetching, 2 have it, 3 gone (404), 4 waiting to retry. dec: 0 none, 1 decoding, 2 ready
+  var L = { crimson: new Look(), emerald: new Look() };
+  var cur = 'crimson', t = 0, now = 0, dir = 1, vel = 0, sweeping = false, prepping = false, opened = false;
+  function other(n) { return n === 'crimson' ? 'emerald' : 'crimson'; }
+  function url(lk, s) { return DIRS[lk] + 's_' + (s < 10 ? '00' : s < 100 ? '0' : '') + s + '.jpg'; }
+  function clampF(f) { return Math.min(N - 1, Math.max(0, f)); }
+  function sheetOf(f) { return Math.floor(clampF(f) / PER); }
 
-  <!-- ============ LAPTOP: pinned 3D laptop that opens on scroll (laptop.js) ============ -->
-  <section class="laptop cine" id="dashboard" data-seq="assets/laptop" data-seq-kind="laptop" aria-label="Résumé dashboard">
-    <div class="laptop-pin">
-      <canvas class="laptop-canvas" id="laptop" aria-hidden="true"></canvas>
-      <div class="lchapter is-active" data-start="0" data-end="0.36">
-        <p class="eyebrow">The proof</p>
-        <h2 class="h2">Open the <em>résumé.</em></h2>
-        <p class="lchapter-note">Keep scrolling. The numbers are on the screen.</p>
-      </div>
-      <div class="lchapter" data-start="0.36" data-end="0.7">
-        <p class="eyebrow">One year of B2B SaaS</p>
-        <h2 class="h2">Demos. Requirements. <em>Go-lives.</em></h2>
-        <p class="lchapter-note">Two live P1 clients in my first month at Shreyas Tech. 1,346 outreach and 34 meetings in two months at FarmwiseAI.</p>
-      </div>
-      <div class="lchapter lchapter-end" data-start="0.7" data-end="1.01" aria-hidden="true"></div>
-    </div>
-  </section>
+  // ---- scroll position <-> walk time ----
+  // clientHeight, not innerHeight: it doesn't change when a phone's toolbar shows or hides
+  function maxY() { return Math.max(1, root.scrollHeight - root.clientHeight); }
+  function progress() { return Math.min(1, Math.max(0, scrollY / maxY())); }
+  function timeAt(p) { return Math.min(T - 1 / FPS, p / (1 - HOLD) * T); }
+  t = timeAt(progress()); // a reload mid-page starts where the page is, no fast-forward
+  var sm = { on: false, y: 0, to: 0, set: -1, tw: null }; // the smooth-scroll glide (see below)
 
-  <!-- ============ WHY HIRE ME ============ -->
-  <section class="why wrap section" id="why">
-    <header class="section-head reveal">
-      <p class="eyebrow">Why hire me</p>
-      <h2 class="h2" data-echo="Why me">Why shortlist <em>me.</em></h2>
-    </header>
-    <ol class="why-list" id="whyList">
-      <li class="reveal"><span class="why-n">01</span><p>Earned Team Lead recognition within 10 days of joining as a trainee.</p></li>
-      <li class="reveal"><span class="why-n">02</span><p>Handled two live P1 clients in my first month, then more on performance.</p></li>
-      <li class="reveal"><span class="why-n">03</span><p>1,346 outreach, 938 follow-ups and 34 client meetings in two months at FarmwiseAI.</p></li>
-      <li class="reveal"><span class="why-n">04</span><p>Represented the company at SATTE 2026, New Delhi: demos and lead generation.</p></li>
-      <li class="reveal"><span class="why-n">05</span><p>Available after hours, weekends and holidays when a client or deal needs it.</p></li>
-    </ol>
-  </section>
+  // ---- downloads: nearest sheets first, in the direction of travel; the look on screen before the other ----
+  var inflight = 0, prio = [];
+  function want(lk, s) { return s >= 0 && s < NS && L[lk].state[s] === 0; }
+  function pick() {
+    for (var i = 0; i < prio.length; i++) if (want(prio[i][0], prio[i][1])) return prio[i];
+    if (sm.tw) return null; // mid-jump: don't spend downloads on sheets we are flying past
+    var cs = sheetOf(t * FPS), o = other(cur);
+    // phones fetch only a window they keep in memory (see the trim below), desktops fetch everything
+    var plans = small ? [[cur, 24, 3], [o, 2, 1], [cur, 46, 12], [o, 8, 4]] : [[cur, 24, 3], [o, 2, 1], [cur, NS, NS], [o, NS, NS]];
+    for (var p = 0; p < plans.length; p++) {
+      var lk = plans[p][0], ah = plans[p][1], be = plans[p][2], m = Math.max(ah, be);
+      for (var d = 0; d <= m; d++) {
+        if (d <= ah && want(lk, cs + dir * d)) return [lk, cs + dir * d];
+        if (d > 0 && d <= be && want(lk, cs - dir * d)) return [lk, cs - dir * d];
+      }
+    }
+    return null;
+  }
+  function pump() { var j; while (inflight < MAXF && (j = pick())) get(j[0], j[1]); }
+  function get(lk, s) {
+    var o = L[lk]; o.state[s] = 1; inflight++;
+    fetch(url(lk, s)).then(function (r) { if (!r.ok) { var er = new Error('HTTP ' + r.status); er.gone = r.status === 404; throw er; } return r.blob(); })
+      .then(function (b) { o.blob[s] = b; o.state[s] = 2; o.tries[s] = 0; if (!opened) loading(); })
+      .catch(function (er) {
+        if (er && er.gone) { o.state[s] = 3; return; }
+        o.tries[s] = Math.min(o.tries[s] + 1, 5); o.state[s] = 4; // back off 2, 4, 8, 16, 32 s and keep trying
+        setTimeout(function () { if (o.state[s] === 4) { o.state[s] = 0; pump(); } }, 1000 * Math.pow(2, o.tries[s]));
+      })
+      .then(function () { inflight--; pump(); });
+  }
+  addEventListener('online', function () {
+    ['crimson', 'emerald'].forEach(function (lk) { var o = L[lk]; for (var s = 0; s < NS; s++) if (o.state[s] === 3 || o.state[s] === 4) { o.state[s] = 0; o.tries[s] = 0; } });
+    pump();
+  });
+  // phones keep only the nearby part of the walk in memory; the browser cache makes a second fetch cheap
+  if (small) setInterval(function () {
+    var cs = sheetOf(t * FPS);
+    ['crimson', 'emerald'].forEach(function (lk) { var o = L[lk], keep = lk === cur ? 50 : 10;
+      for (var s = 0; s < NS; s++) if (o.state[s] === 2 && o.dec[s] === 0 && Math.abs(s - cs) > keep) { o.blob[s] = null; o.state[s] = 0; } });
+  }, 3000);
 
-  <!-- ============ JOURNEY: swipeable 3D ring ============ -->
-  <section class="journey section" id="journey" aria-roledescription="carousel" aria-label="Career journey">
-    <header class="section-head wrap reveal">
-      <p class="eyebrow">Journey</p>
-      <h2 class="h2" data-echo="Journey">From college to <em>business development.</em></h2>
-      <p class="section-note">Swipe, drag or use the arrows.</p>
-    </header>
+  // ---- decoding: sheets become ImageBitmaps around the current moment ----
+  // Safari decodes createImageBitmap(Blob) on the calling thread, so there it runs in a worker; elsewhere it is already off-thread
+  var isSafari = /^((?!chrome|chromium|android|crios|fxios|edg).)*safari/i.test(navigator.userAgent);
+  var dw = null, dq = {}, did = 0;
+  if (isSafari && window.Worker) try {
+    dw = new Worker(URL.createObjectURL(new Blob(['onmessage=function(e){var id=e.data.id;try{createImageBitmap(e.data.b).then(function(bm){try{postMessage({id:id,bm:bm},[bm])}catch(x){postMessage({id:id})}},function(){postMessage({id:id})})}catch(x){postMessage({id:id})}}'], { type: 'text/javascript' })));
+    dw.onmessage = function (e) { var cb2 = dq[e.data.id]; delete dq[e.data.id]; if (cb2) cb2(e.data.bm); };
+    dw.onerror = function () { dw = null; for (var k in dq) { dq[k](null); delete dq[k]; } };
+  } catch (e) { dw = null; }
+  function decodeBlob(b) {
+    if (!dw) return createImageBitmap(b);
+    return new Promise(function (res, rej) { var id = ++did; dq[id] = function (bm) { if (bm) res(bm); else rej(); }; dw.postMessage({ id: id, b: b }); })
+      .catch(function () { dw = null; return createImageBitmap(b); });
+  }
+  var decoding = 0;
+  function ensure(lk, s) {
+    if (s < 0 || s >= NS) return false;
+    var o = L[lk]; o.used[s] = now;
+    if (o.dec[s] === 2) return true;
+    if (o.dec[s] === 0 && o.state[s] === 2 && decoding < MAXD) {
+      o.dec[s] = 1; decoding++;
+      decodeBlob(o.blob[s]).then(function (bm) {
+        if (o.dec[s] !== 1) { if (bm.close) bm.close(); return; }
+        o.bmp[s] = bm; o.dec[s] = 2;
+      }, function () { o.dec[s] = 0; o.blob[s] = null; o.state[s] = 0; })
+        .then(function () { decoding--; });
+    }
+    return false;
+  }
+  function evict(lk, keep) {
+    var o = L[lk], total = 0, idle = [];
+    for (var s = 0; s < NS; s++) if (o.dec[s] === 2) { total++; if (o.used[s] !== now) idle.push(s); }
+    var extra = Math.min(total - keep, idle.length); if (extra <= 0) return;
+    idle.sort(function (a, b) { return o.used[a] - o.used[b]; });
+    for (var i = 0; i < extra; i++) { var k = idle[i]; if (o.bmp[k].close) o.bmp[k].close(); o.bmp[k] = null; o.dec[k] = 0; }
+  }
 
-    <div class="ring-stage" id="ringStage">
-      <div class="ring" id="ring">
-        <article class="ring-card" data-year="2021">
-          <p class="rc-when">2021 – 2025</p>
-          <h3 class="rc-title">Engineering at PERI</h3>
-          <p class="rc-org">B.E. Electronics &amp; Communication · Anna University</p>
-          <p class="rc-text">Graduated with a CGPA of 7.53. Built an IR security alarm and a PCB water-level indicator in Altium.</p>
-          <ul class="rc-tags"><li>PCB design</li><li>Electronics</li><li>MATLAB</li></ul>
-        </article>
-        <article class="ring-card" data-year="2024">
-          <p class="rc-when">Jul – Sep 2024</p>
-          <h3 class="rc-title">Web Development Intern</h3>
-          <p class="rc-org">MX Omega Technologies</p>
-          <p class="rc-text">Built responsive front-end pages with HTML, CSS, JavaScript and React, working in Agile sprints.</p>
-          <ul class="rc-tags"><li>HTML · CSS · JS</li><li>React</li><li>Agile</li></ul>
-        </article>
-        <article class="ring-card" data-year="2025">
-          <p class="rc-when">Jul 2025</p>
-          <h3 class="rc-title">Trainee to Team Lead recognition</h3>
-          <p class="rc-org">Shreyas Tech Solutions</p>
-          <p class="rc-text">Recognised as Team Lead within 10 days for ownership and client coordination. Trusted with two live P1 clients in my first month.</p>
-          <ul class="rc-tags"><li>Ownership</li><li>Client support</li></ul>
-        </article>
-        <article class="ring-card" data-year="2025">
-          <p class="rc-when">2025 – 2026</p>
-          <h3 class="rc-title">Business Analyst, S1 team</h3>
-          <p class="rc-org">Shreyas Tech Solutions · B2B travel SaaS</p>
-          <p class="rc-text">Client acquisition, demos, requirements, SaaS implementation, UAT, go-live and health checks across Marketplace, WaaS and AI MailBot.</p>
-          <ul class="rc-tags"><li>Pre-sales</li><li>BRD · UAT</li><li>Go-live</li></ul>
-        </article>
-        <article class="ring-card" data-year="2026">
-          <p class="rc-when">Feb 2026</p>
-          <h3 class="rc-title">SATTE 2026, New Delhi</h3>
-          <p class="rc-org">Represented Shreyas Tech Solutions</p>
-          <p class="rc-text">Ran product demos for travel businesses, generated leads and researched competitors' products, pricing and positioning.</p>
-          <ul class="rc-tags"><li>Demos</li><li>Lead generation</li><li>Market research</li></ul>
-        </article>
-        <article class="ring-card" data-year="2026">
-          <p class="rc-when">Sep 2026 – Present</p>
-          <h3 class="rc-title">Business Development Intern</h3>
-          <p class="rc-org">FarmwiseAI · Geospatial AI · international pipeline</p>
-          <p class="rc-text">Building the international pipeline: 1,452 organisations researched, 1,346 outreach, 34 client meetings in two months.</p>
-          <ul class="rc-tags"><li>Business development</li><li>Proposals</li><li>Clients</li></ul>
-        </article>
-      </div>
-    </div>
+  // ---- drawing: two neighbouring frames blended by the fraction in between, so motion is continuous at any refresh rate ----
+  var geo = { x: 0, y: 0, w: 0, h: 0 }, drawn = { A: '', B: '' }, exact = { A: false, B: false };
+  function size() {
+    var w = root.clientWidth || innerWidth, h = innerHeight;
+    var s = Math.max(w / FW, h / FH), dpr = window.devicePixelRatio || 1;
+    var r = Math.min(dpr, Math.max(1 / s, 0.5)); // never allocate more pixels than the source can fill
+    var bw = Math.max(1, Math.round(w * r)), bh = Math.max(1, Math.round(h * r));
+    if (bw !== A.width || bh !== A.height) { A.width = B.width = bw; A.height = B.height = bh; drawn.A = drawn.B = ''; }
+    var k = Math.max(bw / FW, bh / FH); geo.w = FW * k; geo.h = FH * k; geo.x = (bw - geo.w) / 2; geo.y = (bh - geo.h) / 2;
+    [ca, cb].forEach(function (c) { c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high'; });
+  }
+  addEventListener('resize', size); size();
+  function blit(ctx, lk, f, alpha) {
+    var c = f % PER, bm = L[lk].bmp[Math.floor(f / PER)];
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(bm, (c % COLS) * FW, Math.floor(c / COLS) * FH, FW, FH, geo.x, geo.y, geo.w, geo.h);
+  }
+  function render(ctx, id, lk, fi) {
+    var f0 = Math.floor(fi), a = fi - f0; if (f0 >= N - 1) { f0 = N - 1; a = 0; }
+    var s0 = Math.floor(f0 / PER), s1 = Math.floor((f0 + 1) / PER);
+    var aq = Math.round(a * 48) / 48;
+    var r0 = ensure(lk, s0), r1 = aq > 0 && aq < 1 ? ensure(lk, s1) : true;
+    if (aq >= 1) { f0++; aq = 0; r0 = ensure(lk, Math.floor(f0 / PER)); }
+    var key;
+    if (r0 && r1) {
+      key = lk + f0 + ':' + aq;
+      if (key !== drawn[id]) { blit(ctx, lk, f0, 1); if (aq > 0) blit(ctx, lk, f0 + 1, aq); ctx.globalAlpha = 1; drawn[id] = key; }
+      exact[id] = true; return true;
+    }
+    if (r0) { // the next sheet is still decoding: hold this frame for a moment
+      key = lk + f0 + ':0';
+      if (key !== drawn[id]) { blit(ctx, lk, f0, 1); drawn[id] = key; }
+      exact[id] = true; return true;
+    }
+    // not decoded yet: show the nearest decoded frame so the screen never goes blank
+    exact[id] = false;
+    var o = L[lk], best = -1;
+    for (var d = 1; d < NS; d++) { if (s0 - d >= 0 && o.dec[s0 - d] === 2) { best = s0 - d; break; } if (s0 + d < NS && o.dec[s0 + d] === 2) { best = s0 + d; break; } }
+    if (best < 0) return false;
+    var fb = best < s0 ? Math.min(N - 1, best * PER + PER - 1) : best * PER;
+    o.used[best] = now; key = lk + fb + ':0';
+    if (key !== drawn[id]) { blit(ctx, lk, fb, 1); ctx.globalAlpha = 1; drawn[id] = key; }
+    return false;
+  }
+  function lookahead(lk, fi) {
+    var s = sheetOf(fi), ahead = Math.max(2, Math.min(KEEP - 3, Math.ceil(vel * 0.4 / PER)));
+    for (var k = 1; k <= ahead; k++) ensure(lk, s + dir * k);
+    ensure(lk, s - dir);
+  }
 
-    <div class="ring-controls wrap">
-      <button class="ring-btn" id="ringPrev" type="button" aria-label="Previous milestone">←</button>
-      <div class="ring-dots" id="ringDots" role="tablist" aria-label="Choose a milestone"></div>
-      <button class="ring-btn" id="ringNext" type="button" aria-label="Next milestone">→</button>
-    </div>
-  </section>
+  // ---- butter scroll: the wheel moves a target, the page glides to it ----
+  function cancelGlide() { var j = sm.tw; sm.on = false; sm.tw = null; if (j) { if (!prepping) prio = []; pump(); } }
+  if (!reduce) addEventListener('wheel', function (e) {
+    if (e.ctrlKey || e.metaKey) return;
+    if (!e.cancelable) { cancelGlide(); return; } // the browser is already scrolling this gesture natively: never add a second scroll
+    var dy = e.deltaY;
+    if (Math.abs(e.deltaX) > Math.abs(dy) && !sm.on) return; // a sideways swipe from rest stays native (back/forward gesture)
+    e.preventDefault(); if (!dy) return;
+    if (e.deltaMode === 1) dy *= 40; else if (e.deltaMode === 2) dy *= innerHeight;
+    if (!sm.on || sm.tw) { cancelGlide(); sm.y = scrollY; sm.to = scrollY; }
+    sm.to = Math.max(0, Math.min(maxY(), sm.to + dy)); sm.on = true;
+  }, { passive: false });
+  addEventListener('keydown', function (e) { if (/^(Arrow|Page|Home|End)/.test(e.key) || e.key === ' ') cancelGlide(); });
+  addEventListener('touchstart', cancelGlide, { passive: true });
+  addEventListener('scroll', function () { if (sm.on && Math.abs(scrollY - sm.set) > 3) cancelGlide(); }, { passive: true });
+  function glide(dt) {
+    if (!sm.on) return;
+    if (sm.tw) {
+      var k = Math.min(1, Math.max(0, (now - sm.tw.t0) / sm.tw.dur)), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      sm.y = sm.tw.from + (sm.tw.to - sm.tw.from) * e;
+      sm.set = sm.y; scrollTo(0, sm.y);
+      if (k >= 1) cancelGlide();
+      return;
+    }
+    sm.y += (sm.to - sm.y) * (1 - Math.pow(0.9, dt / 16.667));
+    if (Math.abs(sm.to - sm.y) < 0.4) { sm.y = sm.to; sm.on = false; }
+    sm.set = sm.y; scrollTo(0, sm.y);
+  }
+  function jumpTo(time) {
+    var m = maxY(), y = (time >= 99 ? 1 : Math.min(1, time / T * (1 - HOLD))) * m;
+    if (reduce) { scrollTo(0, y); return; }
+    var ds = sheetOf(timeAt(y / m) * FPS), dist = Math.abs(y - scrollY);
+    prio = [[cur, ds], [cur, Math.min(NS - 1, ds + 1)], [cur, Math.max(0, ds - 1)]];
+    sm.tw = { from: scrollY, to: y, ds: ds, t0: performance.now(), dur: Math.min(2400, Math.max(700, 500 + dist * 0.16)) }; sm.on = true;
+    pump(); // the landing sheets take the next free download slots
+  }
+  [].slice.call(document.querySelectorAll('[data-jump]')).forEach(function (el) { el.addEventListener('click', function (e) { e.preventDefault(); jumpTo(+el.dataset.jump); }); });
+  document.getElementById('skip').addEventListener('click', function (e) {
+    e.preventDefault(); jumpTo(99);
+    var w0 = performance.now();
+    (function wait() {
+      if (contact.classList.contains('on')) { contact.focus({ preventScroll: true }); if (document.activeElement === contact) return; }
+      if (performance.now() - w0 < 4000) requestAnimationFrame(wait);
+    })();
+  });
 
-  <!-- ============ EXPERIENCE: tabs ============ -->
-  <section class="experience wrap section" id="experience">
-    <header class="section-head reveal">
-      <p class="eyebrow">Experience · work &amp; internships</p>
-      <h2 class="h2" data-echo="Experience">Where I've <em>worked.</em></h2>
-    </header>
+  // ---- the copy that is set into the scene ----
+  var starts = [0, 11.6, 25.6, 30.8, 36.1, 41.6];
+  function setCopy(time) {
+    chs.forEach(function (c) {
+      var a = +c.dataset.in, b = +c.dataset.out, r = Math.min(1, Math.max(0, Math.min((time - a) / 0.6, (b - time) / 0.45)));
+      if (a === 0) r = Math.min(1, Math.max(0, (b - time) / 0.45));
+      var v = r.toFixed(3); if (c._r !== v) { c._r = v; c.style.setProperty('--r', v); c.style.visibility = r > 0.002 ? 'visible' : 'hidden'; }
+    });
+    var latest = -1;
+    cards.forEach(function (c, i) { var on = time >= +c.dataset.at && time < 26.8; if (on) latest = i; if (c.classList.contains('on') !== on) c.classList.toggle('on', on); });
+    cards.forEach(function (c, i) { if (c.classList.contains('latest') !== (i === latest)) c.classList.toggle('latest', i === latest); });
+    var end = time > 42.2; if (contact.classList.contains('on') !== end) { contact.classList.toggle('on', end); document.body.classList.toggle('at-end', end); }
+    var idx = 0; starts.forEach(function (s, i) { if (time >= s) idx = i; });
+    dots.forEach(function (d, i) { var on = i === idx; if (d.classList.contains('on') !== on) { d.classList.toggle('on', on); if (on) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); } });
+    // the rail reaches each dot exactly when its chapter starts
+    var seg = idx < starts.length - 1 ? (time - starts[idx]) / (starts[idx + 1] - starts[idx]) : (time - starts[idx]) / (T - starts[idx]);
+    rail.style.height = ((idx + Math.min(1, Math.max(0, seg))) / (starts.length - 1) * 100).toFixed(2) + '%';
+    hint.style.opacity = time > 0.6 ? 0 : .95;
+    if (!counted && time > 36.6) { counted = true; counters.forEach(function (el) { var n = +el.dataset.count, t0 = performance.now(); (function tick(nw) { var k = Math.min(1, (nw - t0) / 1400), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(n * e).toLocaleString('en-IN'); if (k < 1) requestAnimationFrame(tick); })(t0); }); }
+  }
 
-    <div class="tabs reveal">
-      <div class="tab-list" role="tablist" aria-label="Employers">
-        <button class="tab" role="tab" id="tab-sts" aria-controls="panel-sts" aria-selected="true" type="button"><span>Shreyas Tech Solutions</span><small>2025 – 2026</small></button>
-        <button class="tab" role="tab" id="tab-fw" aria-controls="panel-fw" aria-selected="false" tabindex="-1" type="button"><span>FarmwiseAI</span><small>2026 – Now</small></button>
-        <button class="tab" role="tab" id="tab-mx" aria-controls="panel-mx" aria-selected="false" tabindex="-1" type="button"><span>MX Omega</span><small>2024</small></button>
-      </div>
+  // ---- opening: wait for the first sheets of the moment the page is at ----
+  function loading() {
+    var cs = sheetOf(t * FPS), need = [cs, Math.min(NS - 1, cs + 1), Math.min(NS - 1, cs + 2)], have = 0;
+    need.forEach(function (s) { if (L.crimson.state[s] === 2) have++; });
+    pct.textContent = 'LOADING · ' + Math.min(99, Math.round(have / need.length * 100)) + '%';
+  }
+  function open() {
+    if (opened) return; opened = true;
+    loader.style.pointerEvents = 'none'; loader.style.opacity = 0;
+    setTimeout(function () { loader.hidden = true; }, 850);
+  }
+  setTimeout(open, 15000);
 
-      <div class="tab-panel" role="tabpanel" id="panel-sts" aria-labelledby="tab-sts">
-        <div class="panel-head">
-          <h3 class="role-title">Business Analyst, Pre-Sales &amp; Business Development</h3>
-          <p class="role-meta"><span>Shreyas Tech Solutions (TeSePr)</span> · B2B travel-tech SaaS · Chennai · <time>Jul 2025</time> – <time>Jun 2026</time></p>
-        </div>
-        <ul class="role-points">
-          <li>Joined as a trainee and earned <b>Team Lead recognition within 10 days</b> for ownership, adaptability and client coordination.</li>
-          <li>Trusted with <b>two live P1 clients in my first month</b>, then more accounts based on performance.</li>
-          <li>Moved to the S1 team: client acquisition, product demos, requirement gathering, SaaS implementation, UAT, deployment, go-live, health checks and ongoing support.</li>
-          <li>Owned the SaaS lifecycle from demo and commercial documents to signing, implementation and production support.</li>
-          <li>Worked across Marketplace, WaaS and AI solutions such as MailBot. Contributed to AI initiatives that cut delivery from <b>several months to 1–2 month cycles</b>.</li>
-          <li>Represented the company at <b>SATTE 2026, New Delhi</b>: product demos, lead generation, and research on competitors' products, pricing and positioning.</li>
-          <li>Prepared monthly sales, client and product reports for leadership, and handled after-hours and leave-day escalations for critical clients.</li>
-          <li>Coordinated with Development, QA, Infrastructure, Product and Commercial teams to resolve issues on time.</li>
-        </ul>
-      </div>
+  // ---- main loop ----
+  var lastT = performance.now(), lastCopy = -1, missSince = 0, lastSheet = -1, lastSH = root.scrollHeight, lastP = progress();
+  function frame(ts) { step(ts); requestAnimationFrame(frame); }
+  function step(ts) {
+    now = ts; var dt = Math.min(64, Math.max(0, ts - lastT)); lastT = ts;
+    var sh = root.scrollHeight;
+    if (sh !== lastSH) { lastSH = sh; cancelGlide(); scrollTo(0, lastP * maxY()); } // the page height changed (rotation, resize): stay on the same moment
+    glide(dt);
+    lastP = progress();
+    var target = timeAt(lastP), prev = t;
+    // while the loader is up (and on a restored scroll position) the walk snaps instead of fast-forwarding
+    t += (target - t) * (reduce || !opened ? 1 : 1 - Math.pow(0.7, dt / 16.667)); if (Math.abs(target - t) < 0.0004) t = target;
+    var v = dt > 0 ? (t - prev) * FPS * 1000 / dt : 0; if (v > 0.3) dir = 1; else if (v < -0.3) dir = -1;
+    vel = vel * 0.85 + Math.abs(v) * 0.15;
+    var fi = clampF(t * FPS), s = sheetOf(fi);
+    if (s !== lastSheet) { lastSheet = s; pump(); }
+    if (sm.tw) { ensure(cur, sm.tw.ds); ensure(cur, Math.min(NS - 1, sm.tw.ds + 1)); } // decode where a jump lands before it gets there
+    var ok = render(ca, 'A', cur, fi);
+    if (ok && !opened) open();
+    if (sweeping || prepping) { render(cb, 'B', other(cur), fi); ensure(other(cur), s + dir); }
+    if (!sm.tw) lookahead(cur, fi);
+    evict(cur, KEEP); evict(other(cur), sweeping || prepping ? 3 : 2);
+    // LOADING means waiting on the network, not a fast scroll outrunning the decoder
+    if (!exact.A && !sm.tw && L[cur].state[s] !== 2) { if (!missSince) missSince = ts; } else missSince = 0;
+    var showBuf = !!(opened && missSince && ts - missSince > 350);
+    if (buf.classList.contains('on') !== showBuf) { buf.classList.toggle('on', showBuf); hint.style.visibility = showBuf ? 'hidden' : ''; }
+    var fly = sm.tw && Math.abs(timeAt(sm.tw.to / maxY()) - t) > 1.5; // mid-jump: hold the copy until the last 1.5 s of walk
+    if (t !== lastCopy && !fly) { lastCopy = t; setCopy(t); }
+  }
+  setCopy(t); pump(); requestAnimationFrame(frame);
+  // read-only numbers for checking smoothness from the console: __walk()
+  window.__walk = function () {
+    function n(lk, k, v) { var c = 0, a = L[lk][k]; for (var i = 0; i < NS; i++) if (a[i] === v) c++; return c; }
+    return { look: cur, t: +t.toFixed(3), exact: exact.A, fetched: { crimson: n('crimson', 'state', 2), emerald: n('emerald', 'state', 2) }, decoded: { crimson: n('crimson', 'dec', 2), emerald: n('emerald', 'dec', 2) }, inflight: inflight };
+  };
+  // test hook: advance the loop by hand where the browser pauses animation frames (hidden preview panes)
+  window.__walk.step = function (ms) { step(performance.now() + (ms || 0)); return window.__walk(); };
 
-      <div class="tab-panel" role="tabpanel" id="panel-fw" aria-labelledby="tab-fw" hidden>
-        <div class="panel-head">
-          <h3 class="role-title">Business Development Intern</h3>
-          <p class="role-meta"><span>FarmwiseAI</span> · Geospatial AI &amp; AgriTech · Chennai · <time>4 Sep 2026</time> – Present</p>
-        </div>
-        <ul class="role-points">
-          <li>Building FarmwiseAI's <b>international pipeline</b> for geospatial and agritech solutions across 7 markets: Middle East, Africa, US, Australia, Latin America, APAC and Turkey.</li>
-          <li>Researched <b>1,452 organisations</b> and <b>3,928 decision-maker contacts</b> in my first two months (4 Sep – 27 Oct 2026), and built regional and master prospect databases.</li>
-          <li>Sent <b>1,346</b> personalised LinkedIn and e-mail outreach messages and <b>938</b> follow-ups; logged the first warm and hot leads within the first month.</li>
-          <li>Held <b>34 client meetings</b> and delivered <b>17 presentations</b>, sending minutes of meeting and decks after every call.</li>
-          <li>Supported partner agreements (MSA, NDA and MoU), presented the SkyLabOne drone-analytics demo, and scripted and edited a product launch video.</li>
-          <li>Worked <b>8 weekend and holiday days</b> in two months to keep international conversations moving across time zones.</li>
-        </ul>
-      </div>
+  // ---- the relight: the other colour sweeps across behind a glowing edge, locked to the same moment of the walk ----
+  var busy = false;
+  function label() { return cur === 'crimson' ? 'Emerald Fog' : 'Crimson & Gold'; }
+  btn.addEventListener('click', function () {
+    if (busy) return; busy = true; prepping = true; drawn.B = '';
+    btn.classList.add('wait'); btn.setAttribute('aria-busy', 'true');
+    var oth = other(cur), w0 = performance.now(), f = Math.floor(clampF(t * FPS));
+    [sheetOf(f), sheetOf(f + 1)].forEach(function (s) { var o = L[oth]; if (o.state[s] === 3 || o.state[s] === 4) { o.state[s] = 0; o.tries[s] = 0; } });
+    (function wait() {
+      var f0 = Math.floor(clampF(t * FPS));
+      prio = [[oth, sheetOf(f0)], [oth, sheetOf(f0 + 1)]]; pump();
+      if (exact.B && drawn.B.indexOf(oth) === 0) { prepping = false; prio = []; return sweep(oth); }
+      if (L[oth].state[sheetOf(f0)] === 3 || performance.now() - w0 > 12000) {
+        prepping = false; prio = []; busy = false; btn.classList.remove('wait'); btn.removeAttribute('aria-busy');
+        btn.textContent = 'Try again'; setTimeout(function () { if (!busy) btn.textContent = label(); }, 2000); return;
+      }
+      requestAnimationFrame(wait);
+    })();
+  });
+  function sweep(oth) {
+    sweeping = true; btn.classList.remove('wait');
+    var t0 = performance.now(), dur = reduce ? 1 : 1500, swapped = false;
+    (function stepSweep(nw) {
+      var k = Math.min(1, Math.max(0, (nw - t0) / dur)), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      B.style.clipPath = 'inset(0 ' + ((1 - e) * 100).toFixed(2) + '% 0 0)';
+      edge.style.left = (e * 100).toFixed(2) + '%'; edge.style.opacity = (k > 0 && k < 1) ? 1 : 0;
+      if (!swapped && k > .5) { swapped = true; root.classList.toggle('emerald', oth === 'emerald'); }
+      if (k < 1) { requestAnimationFrame(stepSweep); return; }
+      ca.globalAlpha = 1; ca.drawImage(B, 0, 0); drawn.A = drawn.B; exact.A = exact.B;
+      cur = oth; sweeping = false; B.style.clipPath = 'inset(0 100% 0 0)'; busy = false; drawn.B = '';
+      btn.textContent = label(); btn.setAttribute('aria-label', 'Switch to the ' + label() + ' look'); btn.removeAttribute('aria-busy');
+      pump();
+    })(t0);
+  }
 
-      <div class="tab-panel" role="tabpanel" id="panel-mx" aria-labelledby="tab-mx" hidden>
-        <div class="panel-head">
-          <h3 class="role-title">Web Development Intern</h3>
-          <p class="role-meta"><span>MX Omega Technologies Pvt Ltd</span> · Internship · <time>Jul 2024</time> – <time>Sep 2024</time></p>
-        </div>
-        <ul class="role-points">
-          <li>Built front-end pages with HTML, CSS, JavaScript, React.js and Bootstrap.</li>
-          <li>Debugged and optimised front-end code while working in Agile sprints.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="toolkit reveal" aria-label="Toolkit">
-      <div class="tk-col"><p class="sys-label">Business</p><ul class="chips"><li>LinkedIn &amp; e-mail outreach</li><li>Prospecting</li><li>Product demos</li><li>Proposals</li><li>Market research</li><li>Client relationships</li></ul></div>
-      <div class="tk-col"><p class="sys-label">Analysis &amp; SaaS</p><ul class="chips"><li>Requirements &amp; BRDs</li><li>UAT</li><li>Implementation</li><li>Go-live</li><li>CRM workflows</li></ul></div>
-      <div class="tk-col"><p class="sys-label">Tools</p><ul class="chips"><li>Excel &amp; dashboards</li><li>Salesforce (exposure)</li><li>AI tools</li><li>HTML · CSS · JS</li><li>Altium · KiCad</li></ul></div>
-    </div>
-  </section>
-
-  <!-- ============ WORK ============ -->
-  <section class="work wrap section" id="work">
-    <header class="section-head reveal">
-      <p class="eyebrow">Projects</p>
-      <h2 class="h2" data-echo="Projects">Things I've <em>built.</em></h2>
-    </header>
-    <div class="work-grid work-grid-5">
-      <article class="work-card reveal" data-tilt>
-        <div class="work-art art-web" aria-hidden="true"></div>
-        <p class="work-tag">Web · WebGL · AI-assisted · 2026</p>
-        <h3>This portfolio</h3>
-        <p>Designed and directed end to end with AI-assisted development. The 3D career journey runs in WebGL (Three.js).</p>
-        <p class="work-proof"><b>Shows:</b> I can turn a brief into a shipped product and check quality before launch.</p>
-      </article>
-      <a class="work-card reveal" data-tilt href="https://github.com/AshutoshKumar2312004/E-Commerce" target="_blank" rel="noopener">
-        <div class="work-art art-shop" aria-hidden="true"></div>
-        <p class="work-tag">Web · Vanilla JS · AI-assisted</p>
-        <h3>Perfumy storefront</h3>
-        <p>Hand-coded a static prototype, then rebuilt it into a demo shop: 8 products, filters, search, product modals, cart and checkout flow.</p>
-        <p class="work-proof"><b>Shows:</b> I understand the buyer journey end to end.</p>
-        <span class="work-link">View on GitHub →</span>
-      </a>
-      <a class="work-card reveal" data-tilt href="https://github.com/AshutoshKumar2312004/GUESS-THE-NUMBER" target="_blank" rel="noopener">
-        <div class="work-art art-game" aria-hidden="true"></div>
-        <p class="work-tag">Web · JavaScript · AI-assisted</p>
-        <h3>Guess the Number</h3>
-        <p>Took a 30-line first version and rebuilt it into a 519-line game with hints, saved high scores and animations.</p>
-        <p class="work-proof"><b>Shows:</b> I take a rough first version to a finished product.</p>
-        <span class="work-link">View on GitHub →</span>
-      </a>
-      <article class="work-card reveal" data-tilt>
-        <div class="work-art art-pcb" aria-hidden="true"></div>
-        <p class="work-tag">Electronics · PCB · 2023</p>
-        <h3>IR security alarm</h3>
-        <p>Designed an infrared intrusion alarm on a PCB as a college project, using Altium and MATLAB.</p>
-        <p class="work-proof"><b>Shows:</b> engineering grounding to speak credibly with technical teams.</p>
-      </article>
-      <article class="work-card reveal" data-tilt>
-        <div class="work-art art-water" aria-hidden="true"></div>
-        <p class="work-tag">Electronics · PCB · 2022</p>
-        <h3>Water-level indicator</h3>
-        <p>Built a PCB-based water-level indicator with real-time indication during my B.E.</p>
-        <p class="work-proof"><b>Shows:</b> building something practical from fundamentals.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ============ EDUCATION ============ -->
-  <section class="edu wrap section" id="education">
-    <div class="edu-main reveal">
-      <p class="eyebrow">Education</p>
-      <h2 class="h2" data-echo="PERI">B.E. Electronics &amp; <em>Communication Engineering.</em></h2>
-      <p class="edu-meta">PERI Institute of Technology, Chennai · Affiliated to Anna University · 2021 – 2025</p>
-      <div class="edu-stats">
-        <div><b>7.53</b><span>CGPA</span></div>
-        <div><b>2</b><span>Hardware projects</span></div>
-        <div><b>5</b><span>Courses</span></div>
-      </div>
-      <ul class="edu-high">
-        <li>Designed two PCB projects: an IR security alarm (2023) and a water-level indicator (2022).</li>
-        <li>Completed five courses in PCB design, electronics, Python and web development.</li>
-        <li>Completed a web development internship at MX Omega Technologies (2024).</li>
-      </ul>
-    </div>
-    <div class="edu-certs reveal">
-      <p class="eyebrow">Courses &amp; certifications</p>
-      <ul>
-        <li><span>Web Technologies</span><em>Touchmark Descience · Dec 2024 – Feb 2025</em></li>
-        <li><span>Full Stack Web Development</span><em>PrepInsta · Oct 2024</em></li>
-        <li><span>Python Core</span><em>SoloLearn · Nov 2022</em></li>
-        <li><span>Soldering for Electronics</span><em>LinkedIn Learning · Sep 2022</em></li>
-        <li><span>Learning Altium</span><em>LinkedIn Learning · Aug 2022</em></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ============ PHONE: pinned scroll-scrubbed telephone (frame sequence, scenes.js) ============ -->
-  <section class="phone cine" id="call" data-seq="assets/phone" aria-label="Call to action">
-    <div class="phone-pin">
-      <canvas class="phone-canvas" aria-hidden="true"></canvas>
-      <div class="phone-shade" aria-hidden="true"></div>
-      <div class="pchapter pchapter-title is-active" data-start="0" data-end="0.42">
-        <h2 class="comm-title">Let's<span>.Talk</span></h2>
-        <p class="comm-proto"><i></i>Protocol: open_to_work · BD · Pre-Sales · BA</p>
-      </div>
-      <div class="pchapter pchapter-form" data-start="0.42" data-end="1.01">
-        <h2 class="comm-title comm-title-sm">Let's<span>.Talk</span></h2>
-        <form class="comm-form" id="commForm" novalidate>
-          <div class="cf-row">
-            <label class="cf-field"><span>Your_name</span><input id="cfName" name="name" type="text" autocomplete="name" placeholder="Priya Sharma, HR"></label>
-            <label class="cf-field"><span>Your_email</span><input id="cfEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com"></label>
-          </div>
-          <label class="cf-field"><span>Message</span><textarea id="cfMsg" name="message" rows="4" placeholder="We'd like to talk about a Business Development role…"></textarea></label>
-          <div class="cf-foot">
-            <button class="btn btn-solid" type="submit">Send message <i>→</i></button>
-            <p class="cf-note" id="cfNote" aria-live="polite">Opens your email app, addressed to Ashutosh.</p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CONTACT ============ -->
-  <section class="contact wrap section" id="contact">
-    <p class="eyebrow reveal">Contact</p>
-    <h2 class="h2 reveal">Or reach me <em>directly.</em></h2>
-    <p class="contact-lede reveal">Based in Chennai, I'm open to Business Development, Pre-Sales and Business Analyst roles in SaaS, AI and Geospatial companies. Recruiters, I'd be glad to hear from you.</p>
-    <div class="contact-row reveal">
-      <div class="email-box">
-        <span class="email-label">Email</span>
-        <a class="email-addr" id="emailAddr" href="mailto:ashutoshkumar04022004.ak@gmail.com">ashutoshkumar04022004.ak@gmail.com</a>
-        <button class="btn btn-ghost btn-small" id="copyEmail" type="button">Copy</button>
-      </div>
-      <div class="contact-links">
-        <a class="btn" href="https://www.linkedin.com/in/ashutosh-kumar-053428307/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://github.com/AshutoshKumar2312004" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-ghost" href="assets/Ashutosh_Kumar_Resume.pdf" target="_blank" rel="noopener" title="Download résumé (PDF, 2 pages)">Résumé (PDF)</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="footer wrap">
-  <span>© 2026 Ashutosh Kumar</span>
-  <span class="footer-mid">From BA to BD · Chennai, India</span>
-  <a href="#top" class="link-quiet">Back to top ↑</a>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-<script src="scene.js"></script>
-<script src="portrait.js"></script>
-<script src="main.js"></script>
-<script src="scenes.js"></script>
-
+  // ---- copy the email: execCommand works inside a click even in a sandboxed iframe; the async API is the second try ----
+  var copyBtn = document.getElementById('copy'), mail = document.getElementById('mail');
+  function say(s, ms) { copyBtn.textContent = s; clearTimeout(copyBtn._t); copyBtn._t = setTimeout(function () { copyBtn.textContent = 'Copy'; }, ms); }
+  function manual() { say(small ? 'Selected' : (/Mac|iP/.test(navigator.platform) ? 'Press ⌘C' : 'Press Ctrl+C'), 4000); }
+  copyBtn.addEventListener('click', function () {
+    var sel = getSelection(), r = document.createRange(); r.selectNodeContents(mail); sel.removeAllRanges(); sel.addRange(r);
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    if (ok) { sel.removeAllRanges(); return say('Copied', 1800); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(mail.textContent).then(function () { sel.removeAllRanges(); say('Copied', 1800); }, manual); else manual();
+  });
+})();
+</script>
 </body>
 </html>
